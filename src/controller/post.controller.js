@@ -2,6 +2,7 @@ const postModel = require("../models/post.model")
 const ImageKit = require("@imagekit/nodejs")
 const { toFile } = require("@imagekit/nodejs")
 const jwt = require("jsonwebtoken");
+const likeModel = require('../models/like.mode')
 
 
 
@@ -81,9 +82,35 @@ async function getPostDetailsController(req, res) {
 
 }
 
+async function likePostController(req,res){
+    const username = req.user.username
+    const postid = req.params.postid
+
+    const post = await postModel.findById(postid)
+
+    if(!post){
+        return res.status(404).json({
+            message:"post not exist"
+        })
+    }
+
+    const like = await likeModel.create({
+        postId:postid,
+        user:username
+    })
+
+
+    return res.status(201).json({
+        message:"Post liked Succecfully",
+        like
+    })
+
+}
+
 
 module.exports = {
     createPostController,
     getPostController,
-    getPostDetailsController
+    getPostDetailsController,
+    likePostController
 }
