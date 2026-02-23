@@ -1,28 +1,58 @@
-import React from 'react'
-import '../Style/form.scss'
-import {Link} from 'react-router-dom'
+import React, { useState } from 'react'
+import "../style/form.scss"
+import { Link } from 'react-router'
+import { useAuth } from '../hooks/useAuth'
+import { useNavigate } from 'react-router'
 
 const Login = () => {
 
-  function formHandle(e){
-    e.preventDefault()
-  }
+    const { user, loading, handleLogin } = useAuth()
 
-  return (
+    const [ username, setUsername ] = useState("")
+    const [ password, setPassword ] = useState("")
 
-    <main>
-      <div className="form-container">
-        <h1>Login</h1>
-        <form  onSubmit={formHandle}>
-          <input type="text" name='username' id='username' placeholder='Enter username' />
-          <input type="password" name='password' id='password' placeholder='Enter Password' />
-          <button className='button primary-button' >Login</button>
-        </form>
-        <p>Don't have an account? <Link to={"/Register"}>register.</Link> </p>
-      </div>
-    </main>
+    const navigate = useNavigate()
 
-  )
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        await handleLogin(username, password)
+
+        navigate('/')
+
+    }
+
+    if (loading) {
+        return (<main>
+            <h1>Loading.....</h1>
+        </main>)
+    }
+
+
+    return (
+
+        <main>
+            <div className="form-container">
+                <h1>Login</h1>
+                <form onSubmit={handleSubmit} >
+                    <input
+                        onInput={(e) => { setUsername(e.target.value) }}
+                        type="text"
+                        name='username'
+                        id='username'
+                        placeholder='Enter username' />
+                    <input
+                        onInput={(e) => { setPassword(e.target.value) }}
+                        type="password"
+                        name='password'
+                        id='password'
+                        placeholder='Enter password' />
+                    <button className='button primary-button' >Login</button>
+                </form>
+                <p>Don't have an account ? <Link to={"/register"} >Create One.</Link></p>
+            </div>
+        </main>
+    )
 }
 
 export default Login
