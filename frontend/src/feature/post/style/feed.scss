@@ -1,0 +1,55 @@
+.feed-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;   // better for feed layout
+
+    .feed{
+        max-width: 500px;      // 300px too small for posts
+        width: 100%;
+
+        .posts{
+            width: 100%;
+
+            .post{
+                width: 100%;
+                background: gray;
+                color: black;
+                margin-bottom: 20px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+                .user{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 10px;
+
+                    img{
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    p{
+                        font-weight: 600;
+                    }
+                }
+
+                img{
+                    width: 100%;
+                    height: auto;
+                }
+
+                .bottom{
+                    padding: 10px;
+
+                    .caption{
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}

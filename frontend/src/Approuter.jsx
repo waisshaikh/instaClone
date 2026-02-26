@@ -1,6 +1,7 @@
 import { createBrowserRouter}from 'react-router-dom';
 import Login from './feature/auth/pages/Login';
 import Register from './feature/auth/pages/Register'
+import Feed from './feature/post/Feed.jsx';
 
 const router = createBrowserRouter([
     {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     },
     {
         path:'/',
-        element: <h1>Welcome to my app</h1>
+        element: <Feed/>
     }
 ]);
 
