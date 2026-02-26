@@ -2,21 +2,17 @@ const postModel = require("../models/post.model")
 const ImageKit = require("@imagekit/nodejs")
 const { toFile } = require("@imagekit/nodejs")
 const jwt = require("jsonwebtoken");
-const likeModel = require('../models/like.mode')
-
-
+const likeModel = require('../models/like.mode');
+const { post } = require("../router/post");
 
 const imagekit = new ImageKit({
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY
 })
 
-
 async function createPostController(req, res) {
     console.log(req.body, req.file)
 
-    
-
-    console.log(decoded)
+    // console.log(decoded)
 
     const file = await imagekit.files.upload({
         file: await toFile(Buffer.from(req.file.buffer), 'file'),
@@ -36,11 +32,9 @@ async function createPostController(req, res) {
     })
 }
 
-
 async function getPostController(req, res) {
 
     const userId = req.user.id
-
     const posts = await postModel.find({
         user: userId
     })
@@ -51,7 +45,6 @@ async function getPostController(req, res) {
             posts
         })
 }
-
 
 async function getPostDetailsController(req, res) {
 
@@ -82,27 +75,33 @@ async function getPostDetailsController(req, res) {
 
 }
 
-async function likePostController(req,res){
+async function likePostController(req, res) {
     const username = req.user.username
     const postid = req.params.postid
-
     const post = await postModel.findById(postid)
 
-    if(!post){
+    if (!post) {
         return res.status(404).json({
-            message:"post not exist"
-        })
+            message: "post not exist"
+    })
     }
 
     const like = await likeModel.create({
-        postId:postid,
-        user:username
+        postId: postid,
+        user: username
     })
 
-
     return res.status(201).json({
-        message:"Post liked Succecfully",
+        message: "Post liked Succecfully",
         like
+    })
+}
+
+async function getFeedController(req, res) {
+    const post = await postModel.find({ user: req.user.id }).populate('user')
+    res.status(200).json({
+        message: "Post fetched succesfully",
+        post
     })
 
 }
@@ -112,5 +111,6 @@ module.exports = {
     createPostController,
     getPostController,
     getPostDetailsController,
-    likePostController
+    likePostController,
+    getFeedController
 }

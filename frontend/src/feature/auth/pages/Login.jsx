@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import "../style/form.scss"
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { useNavigate } from 'react-router'
+
 
 const Login = () => {
 
