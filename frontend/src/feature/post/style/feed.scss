@@ -4,13 +4,13 @@
     justify-content: center;   // better for feed layout
 
     .feed{
-        max-width: 500px;      // 300px too small for posts
+        max-width: 500px;      // 300px too small for Posts
         width: 100%;
 
-        .posts{
+        .Posts{
             width: 100%;
 
-            .post{
+            .Post{
                 width: 100%;
                 background: gray;
                 color: black;
@@ -45,6 +45,28 @@
                 .bottom{
                     padding: 10px;
 
+                    .icons{
+                        display: flex;
+                        justify-content: space-between;
+                        svg{
+                            aspect-ratio: 1/1;
+                            width: 1rem;
+                            color: white;
+
+                        }
+                        button{
+                            background-color: transparent;
+                            border: none;
+                            outline-style: none;
+                        }
+
+                        .left{
+                            display: flex;
+                            gap: 1rem;
+                        }
+                        
+                    }
+
                     .caption{
                         font-size: 14px;
                     }
@@ -53,3 +75,4 @@
         }
     }
 }
+
